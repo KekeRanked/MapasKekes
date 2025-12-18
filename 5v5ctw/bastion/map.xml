@@ -98,8 +98,8 @@
         <rectangle min="-35,-50" max="35,51"/>
     </complement>
     <union id="beacons-glass">
-        <block>28,13,84</block>
-        <block>-29,13,-84</block>
+        <block>28,14,91</block>
+        <block>-29,14,-91</block>
     </union>
     <apply region="blue-spawn" enter="only-blue" message="You may not enter the enemy spawn!"/>
     <apply region="red-spawn" enter="only-red" message="You may not enter the enemy spawn!"/>
@@ -114,17 +114,18 @@
 <renewables>
     <renewable rate="1" grow="false" particles="true" sound="true" avoid-entities="true" region="spawns-iron" renew-filter="only-iron"/>
 </renewables>
-<wools craftable="false" wool-proximity-metric="none" monument-proximity-metric="closest block">
-    <wool team="blue-team" color="purple" craftable="false" location="-28.5,14,-84.5">
-        <monument>
-            <block>-25,13,74</block>
-        </monument>
-    </wool>
-    <wool team="red-team" color="orange" craftable="false" location="28.5,14,85.5">
-        <monument>
-            <block>24,13,-74</block>
-        </monument>
-    </wool>
+<wools wool-proximity-metric="none" monument-proximity-metric="closest block">
+  <wool team="blue-team" color="purple" craftable="false" location="-28.5,14,-84.5">
+    <monument>
+      <block>-25,13,74</block>
+    </monument>
+  </wool>
+
+  <wool team="red-team" color="orange" craftable="false" location="28.5,14,85.5">
+    <monument>
+      <block>24,13,-74</block>
+    </monument>
+  </wool>
 </wools>
 <toolrepair>
     <tool>iron sword</tool>
