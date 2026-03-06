@@ -24,12 +24,12 @@
         <effect duration="2s" amplifier="255">resistance</effect>
     </kit>
     <kit id="blue-kit" parents="spawn-kit">
-        <helmet unbreakable="true" color="4C7F99" material="leather helmet"/>
-        <chestplate unbreakable="true" color="4C7F99" material="leather chestplate"/>
+        <helmet unbreakable="true" color="334CB2" material="leather helmet"/>
+        <chestplate unbreakable="true" color="334CB2" material="leather chestplate"/>
     </kit>
     <kit id="red-kit" parents="spawn-kit">
-        <helmet unbreakable="true" color="E5E533" material="leather helmet"/>
-        <chestplate unbreakable="true" color="E5E533" material="leather chestplate"/>
+        <helmet unbreakable="true" color="993333" material="leather helmet"/>
+        <chestplate unbreakable="true" color="993333" material="leather chestplate"/>
     </kit>
 </kits>
 <spawns>
