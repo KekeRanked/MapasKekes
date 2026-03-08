@@ -151,7 +151,7 @@
     <control-point id="blue-last-point" required="false" show="false" points="1" name="BL Point" capture-time="0s" capture="everywhere" player-filter="filter-last-point-red" capture-filter="only-red"/>
 </control-points>
 <score>
-    <limit>800</limit>
+    <limit>750</limit>
 </score>
 <toolrepair>
     <tool>stone sword</tool>
