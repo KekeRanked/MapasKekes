@@ -10,7 +10,6 @@
 <variant id="by">BY</variant>
 <variant id="gb">GB</variant>
 <variant id="yr">YR</variant>
-<variant id="champions">Champions</variant>
 
 <!-- Constants -->
 <constants>
@@ -42,19 +41,11 @@
         <constant id="blue_name">Yellow</constant>
     </constants>
 </if>
-<if variant="champions">
-    <constants>
-        <constant id="team_size">7</constant>
-    </constants>
-</if>
 
 <!-- Includes -->
-<unless variant="boneless,champions">
+<unless variant="boneless">
     <include id="conquest"/>
 </unless>
-<if variant="champions">
-    <include id="champions"/>
-</if>
 
 <authors>
     <author uuid="2df2bef6-6f50-4e4e-a891-048990bf1f5c"/> <!-- Blaszszcak -->
@@ -72,7 +63,7 @@
 </teams>
 
 <!-- Kit: Standard (conquest + spawn resistance) -->
-<unless variant="boneless,rod,champions">
+<unless variant="boneless,rod">
     <kits>
         <kit id="spawn-kit" parent="base-kit">
             <effect duration="4s" amplifier="255">resistance</effect>
@@ -141,30 +132,16 @@
             <point>-23.5,70,-24.5</point>
         </region>
     </default>
-    <unless variant="champions">
-        <spawn team="blue" kit="spawn-kit">
-            <region yaw="0">
-                <point>28.5,5,-26.6</point>
-            </region>
-        </spawn>
-        <spawn team="red" kit="spawn-kit">
-            <region yaw="-90">
-                <point>-25.5,5,27.5</point>
-            </region>
-        </spawn>
-    </unless>
-    <if variant="champions">
-        <spawn team="blue">
-            <region yaw="0">
-                <point>28.5,5,-26.6</point>
-            </region>
-        </spawn>
-        <spawn team="red">
-            <region yaw="-90">
-                <point>-25.5,5,27.5</point>
-            </region>
-        </spawn>
-    </if>
+    <spawn team="blue" kit="spawn-kit">
+        <region yaw="0">
+            <point>28.5,5,-26.6</point>
+        </region>
+    </spawn>
+    <spawn team="red" kit="spawn-kit">
+        <region yaw="-90">
+            <point>-25.5,5,27.5</point>
+        </region>
+    </spawn>
 </spawns>
 
 <!-- Regions (rounded union capture areas) -->

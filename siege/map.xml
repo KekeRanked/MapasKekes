@@ -252,11 +252,9 @@
     <control-point initial-owner="red" id="red-last" required="false" name="Red Last" capture-time="5s" points="0" incremental="true" capture="cp-red-last" progress="cp-red-last" player-filter="filter-red-last"/>
     <!-- Point-giving control points -->
     <control-point id="red-last-point" required="false" show="false" points="10000" name="RL Point" capture-time="0s" capture="everywhere" player-filter="filter-last-point-blue" capture-filter="only-blue"/>
-    <control-point id="red-last-point" required="false" show="false" points="1" name="RL Point" capture-time="0s" capture="everywhere" player-filter="filter-last-point-blue" capture-filter="only-blue"/>
     <control-point id="red-2nd-point" required="false" show="false" points="1" name="R2 Point" capture-time="0s" capture="everywhere" player-filter="filter-2nd-point-blue" capture-filter="only-blue"/>
     <control-point id="blue-2nd-point" required="false" show="false" points="1" name="B2 Point" capture-time="0s" capture="everywhere" player-filter="filter-2nd-point-red" capture-filter="only-red"/>
     <control-point id="blue-last-point" required="false" show="false" points="10000" name="BL Point" capture-time="0s" capture="everywhere" player-filter="filter-last-point-red" capture-filter="only-red"/>
-    <control-point id="blue-last-point" required="false" show="false" points="1" name="BL Point" capture-time="0s" capture="everywhere" player-filter="filter-last-point-red" capture-filter="only-red"/>
 </control-points>
 <score>
     <limit>750</limit>
