@@ -44,7 +44,102 @@
 
 <!-- Includes -->
 <unless variant="boneless">
-    <include id="conquest"/>
+    <!-- Base conquest kit include file -->
+    <!-- Created by mameBT -->
+    <!-- Version 2026.02.04-1 -->
+    <!-- Golden apple kill reward include file -->
+    <!-- Author: Pablete1234 -->
+    <!-- Version 2026.03.03 -->
+    <!--
+        This include file prevents golden apple consumption from being interrupted
+        after killing another play and receiving a golden apple as a kill reward.
+    -->
+    <constants fallback="true">
+        <constant id="gapple-name" delete="true"/>
+        <constant id="gapple-lore" delete="true"/>
+        <constant id="gapple-slot" delete="true"/>
+        <constant id="gapple-locked" delete="true"/>
+        <constant id="gapple-reward-filter" delete="true"/>
+    </constants>
+    <variables>
+        <variable id="missing_gaps" scope="player"/>
+    </variables>
+    <filters>
+        <holding id="holding-gap" ignore-metadata="true">
+            <item>golden apple</item>
+        </holding>
+        <pulse id="pulse-give-gap" duration="0.05s" period="0.1s" filter="all(not(holding-gap),missing_gaps=1..)"/>
+    </filters>
+    <actions>
+        <action id="give-gap" scope="player">
+            <kit deduct-items="false">
+                <item material="golden apple" slot="${gapple-slot}" locked="${gapple-locked}" name="${gapple-name}" lore="${gapple-lore}"/>
+            </kit>
+            <set var="missing_gaps" value="missing_gaps-1"/>
+        </action>
+        <trigger scope="player" filter="pulse-give-gap" action="give-gap"/>
+    </actions>
+    <kill-rewards>
+        <kill-reward filter="${gapple-reward-filter}">
+            <action>
+                <set var="missing_gaps" value="missing_gaps+1"/>
+                <action filter="not(holding-gap)">
+                    <action id="give-gap"/>
+                </action>
+            </action>
+        </kill-reward>
+    </kill-rewards>
+    <constants fallback="true">
+        <constant id="override-itemkeep">false</constant>
+        <constant id="override-kill-reward">false</constant>
+    </constants>
+    <kits>
+        <kit id="base-kit">
+            <clear/>
+            <item slot="0" unbreakable="true" material="stone sword"/>
+            <item slot="1" unbreakable="true" material="bow"/>
+            <item slot="2" material="golden apple"/>
+            <item slot="8" amount="12" material="arrow"/>
+            <helmet unbreakable="true" team-color="true" material="leather helmet"/>
+            <chestplate unbreakable="true" team-color="true" material="leather chestplate"/>
+            <leggings unbreakable="true" material="chainmail leggings">
+                <enchantment level="3">projectile_protection</enchantment>
+            </leggings>
+            <boots unbreakable="true" material="iron boots"/>
+            <effect duration="${damage-resistance}" amplifier="5">resistance</effect>
+            <game-mode>adventure</game-mode>
+        </kit>
+    </kits>
+    <toolrepair>
+        <tool>stone sword</tool>
+        <tool>bow</tool>
+    </toolrepair>
+    <itemremove>
+        <item>leather helmet</item>
+        <item>leather chestplate</item>
+        <item>chainmail leggings</item>
+        <item>iron boots</item>
+        <item>banner</item>
+    </itemremove>
+    <unless constant="override-itemkeep" constant-value="true">
+        <itemkeep>
+            <item>stone sword</item>
+            <item>bow</item>
+            <item>golden apple</item>
+            <item>arrow</item>
+        </itemkeep>
+    </unless>
+    <unless constant="override-kill-reward" constant-value="true">
+        <kill-rewards>
+            <kill-reward>
+                <item amount="6" material="arrow"/>
+            </kill-reward>
+        </kill-rewards>
+    </unless>
+    <respawn delay="${respawn-timer}" auto="true"/>
+    <hunger>
+        <depletion>off</depletion>
+    </hunger>
 </unless>
 
 <authors>
