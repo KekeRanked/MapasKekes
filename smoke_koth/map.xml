@@ -1,0 +1,74 @@
+<map proto="1.4.2">
+<name>Smoke KotH</name>
+<version>1.2.19</version>
+
+<constant id="damage-resistance">4s</constant>
+<constant id="respawn-timer">5s</constant>
+<include id="conquest"/>
+
+<objective>Be the first team to reach 2500 points!</objective>
+
+<authors>
+    <author uuid="2958ea4c-3501-404e-88cc-12e8632f68cc"/> <!-- Nixani -->
+    <author uuid="6bec5c3a-4934-4b19-9aa8-c7c569820f7d"/> <!-- Claf -->
+</authors>
+
+<contributors>
+    <contributor uuid="9929437a-9b7d-4d7a-b05d-e22fe93ac042"/> <!-- triplezko -->
+</contributors>
+
+<teams>
+    <team id="red" color="dark red" max="7" max-overfill="7">Red</team>
+    <team id="yellow" color="yellow" max="7" max-overfill="7">Yellow</team>
+</teams>
+
+<kits>
+    <kit id="spawn-kit" parent="base-kit"/>
+</kits>
+
+<spawns>
+    <default>
+        <region yaw="135">
+            <point>101,38,-272</point>
+        </region>
+    </default>
+
+    <spawn team="red" kit="spawn-kit">
+        <region yaw="-90">
+            <point>49.5,22,-265.5</point>
+        </region>
+    </spawn>
+
+    <spawn team="yellow" kit="spawn-kit">
+        <region yaw="0">
+            <point>107.5,22,-323.5</point>
+        </region>
+    </spawn>
+</spawns>
+
+<regions>
+    <cuboid id="top" min="60,20,-313" size="7,4,7"/>
+    <cuboid id="bottom" min="77,13,-296" size="7,4,7"/>
+    <cuboid id="cave" min="61,8,-312" size="7,4,7"/>
+    <apply block="never" use="never"/>
+</regions>
+
+<king>
+    <hills required="false"
+           capture-time="5s"
+           points="3"
+           time-multiplier="0"
+           show-progress="true"
+           neutral-state="true"
+           incremental="true"
+           permanent="false">
+        <hill name="Top" capture="top" progress="top"/>
+        <hill name="Bottom" capture="bottom" progress="bottom"/>
+        <hill name="Cave" capture="cave" progress="cave"/>
+    </hills>
+</king>
+
+<score>
+    <limit>2500</limit>
+</score>
+</map>

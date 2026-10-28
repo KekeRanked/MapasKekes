@@ -1,0 +1,198 @@
+<map proto="1.5.0">
+<name>Coven</name>
+<version>1.6.1</version>
+<objective>Reach 750 points before the opposing team!</objective>
+
+<!-- Variants -->
+<variant id="boneless">Boneless</variant>
+<variant id="rod">Rod</variant>
+<variant id="rb">RB</variant>
+<variant id="by">BY</variant>
+<variant id="gb">GB</variant>
+<variant id="yr">YR</variant>
+<variant id="champions">Champions</variant>
+
+<!-- Constants -->
+<constants>
+    <constant id="blue_color">blue</constant>
+    <constant id="blue_name">Blue</constant>
+    <constant id="red_color">dark red</constant>
+    <constant id="red_name">Red</constant>
+    <constant id="team_size">5</constant>
+
+    <!-- Required by the conquest include. -->
+    <constant id="damage-resistance">4s</constant>
+    <constant id="respawn-timer">3s</constant>
+</constants>
+<if variant="by">
+    <constants>
+        <constant id="red_color">yellow</constant>
+        <constant id="red_name">Yellow</constant>
+    </constants>
+</if>
+<if variant="gb">
+    <constants>
+        <constant id="red_color">green</constant>
+        <constant id="red_name">Green</constant>
+    </constants>
+</if>
+<if variant="yr">
+    <constants>
+        <constant id="blue_color">yellow</constant>
+        <constant id="blue_name">Yellow</constant>
+    </constants>
+</if>
+<if variant="champions">
+    <constants>
+        <constant id="team_size">7</constant>
+    </constants>
+</if>
+
+<!-- Includes -->
+<unless variant="boneless,champions">
+    <include id="conquest"/>
+</unless>
+<if variant="champions">
+    <include id="champions"/>
+</if>
+
+<authors>
+    <author uuid="2df2bef6-6f50-4e4e-a891-048990bf1f5c"/> <!-- Blaszszcak -->
+</authors>
+<contributors>
+    <contributor uuid="d9f76ee6-975a-45ab-bbda-763600738a73"/> <!-- Aleeeay -->
+    <contributor uuid="74948888-fdb8-4446-9340-f7688c2435cc"/> <!-- Zero_Frosty -->
+    <contributor uuid="0a359aef-794b-4d88-97ca-5672d9421532" contribution="Decoration"/> <!-- xTrina -->
+    <contributor uuid="0c44ca5a-6a42-49b7-81f2-58dc6d2ae3e9"/> <!-- Xerocoles -->
+</contributors>
+
+<teams>
+    <team id="blue" color="${blue_color}" max="${team_size}" max-overfill="${team_size}">${blue_name}</team>
+    <team id="red" color="${red_color}" max="${team_size}" max-overfill="${team_size}">${red_name}</team>
+</teams>
+
+<!-- Kit: Standard (conquest + spawn resistance) -->
+<unless variant="boneless,rod,champions">
+    <kits>
+        <kit id="spawn-kit" parent="base-kit">
+            <effect duration="4s" amplifier="255">resistance</effect>
+        </kit>
+    </kits>
+</unless>
+
+<!-- Kit: Rod variant (conquest + fishing rod) -->
+<if variant="rod">
+    <kits>
+        <kit id="spawn-kit" parent="base-kit">
+            <effect duration="4s" amplifier="255">resistance</effect>
+            <item slot="3" unbreakable="true" material="fishing rod"/>
+        </kit>
+    </kits>
+    <toolrepair>
+        <tool>fishing rod</tool>
+    </toolrepair>
+</if>
+
+<!-- Kit: Boneless variant (sword only, no bow/arrows) -->
+<if variant="boneless">
+    <kits>
+        <kit id="spawn-kit">
+            <clear/>
+            <item slot="0" unbreakable="true" material="stone sword"/>
+            <item slot="1" material="golden apple"/>
+            <helmet locked="true" unbreakable="true" team-color="true" material="leather helmet"/>
+            <chestplate locked="true" unbreakable="true" team-color="true" material="leather chestplate"/>
+            <leggings locked="true" unbreakable="true" material="chainmail leggings"/>
+            <boots locked="true" unbreakable="true" material="iron boots">
+                <enchantment>feather_falling</enchantment>
+                <enchantment>fire_protection</enchantment>
+            </boots>
+            <effect duration="1s" amplifier="0">health boost</effect>
+            <effect duration="1s" amplifier="10">regeneration</effect>
+            <effect duration="4s" amplifier="255">resistance</effect>
+            <game-mode>adventure</game-mode>
+        </kit>
+    </kits>
+    <toolrepair>
+        <tool>stone sword</tool>
+    </toolrepair>
+    <itemremove>
+        <item>leather helmet</item>
+        <item>leather chestplate</item>
+        <item>chainmail leggings</item>
+        <item>iron boots</item>
+    </itemremove>
+    <itemkeep>
+        <item>golden apple</item>
+    </itemkeep>
+    <kill-reward>
+        <item material="golden apple"/>
+    </kill-reward>
+    <respawn delay="3s" auto="true"/>
+    <hunger>
+        <depletion>off</depletion>
+    </hunger>
+</if>
+
+<!-- Spawns -->
+<spawns>
+    <default>
+        <region yaw="-45">
+            <point>-23.5,70,-24.5</point>
+        </region>
+    </default>
+    <unless variant="champions">
+        <spawn team="blue" kit="spawn-kit">
+            <region yaw="0">
+                <point>28.5,5,-26.6</point>
+            </region>
+        </spawn>
+        <spawn team="red" kit="spawn-kit">
+            <region yaw="-90">
+                <point>-25.5,5,27.5</point>
+            </region>
+        </spawn>
+    </unless>
+    <if variant="champions">
+        <spawn team="blue">
+            <region yaw="0">
+                <point>28.5,5,-26.6</point>
+            </region>
+        </spawn>
+        <spawn team="red">
+            <region yaw="-90">
+                <point>-25.5,5,27.5</point>
+            </region>
+        </spawn>
+    </if>
+</spawns>
+
+<!-- Regions (rounded union capture areas) -->
+<regions>
+    <union id="cap-region-bot">
+        <cuboid min="-6,6,-1" max="-1,10,-8"/>
+        <cuboid min="-7,6,-2" max="0,10,-7"/>
+    </union>
+    <union id="cap-region-cave">
+        <cuboid min="22,4,22" max="29,8,27"/>
+        <cuboid min="23,4,21" max="28,8,28"/>
+    </union>
+    <union id="cap-region-top">
+        <cuboid min="17,12,17" max="24,16,22"/>
+        <cuboid min="18,12,16" max="23,16,23"/>
+    </union>
+    <apply block="never"/>
+</regions>
+
+<king>
+    <hills required="false" capture-time="5s" points="1" time-multiplier="0" show-progress="true" neutral-state="true" incremental="true" permanent="false">
+        <hill name="Top" capture="cap-region-top" progress="cap-region-top"/>
+        <hill name="Bottom" capture="cap-region-bot" progress="cap-region-bot"/>
+        <hill name="Cave" capture="cap-region-cave" progress="cap-region-cave"/>
+    </hills>
+</king>
+
+<score>
+    <limit>750</limit>
+</score>
+</map>

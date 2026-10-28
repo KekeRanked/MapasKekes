@@ -1,0 +1,138 @@
+<map proto="1.4.0">
+<name>Flag Football: Kiwi</name>
+<version>1.4.10</version>
+<objective>Capture the flag as many times as possible in eight minutes!</objective>
+<gamemode>ffb</gamemode>
+<authors>
+    <author uuid="d3814d5a-3d37-42f2-9db8-916846bb70ad"/> <!-- AlmightyBread -->
+</authors>
+<contributors>
+    <contributor uuid="0c44ca5a-6a42-49b7-81f2-58dc6d2ae3e9" contribution="Original Layout and Theme, XML, and Minor Assistance"/> <!-- Xerocoles -->
+    <contributor uuid="fe3608b7-d105-4029-8800-34b3147065b6" contribution="Tree Stuff"/> <!-- rockymine -->
+</contributors>
+<teams>
+    <team id="red-team" color="dark red" max="8">Red</team>
+    <team id="blue-team" color="blue" max="8">Blue</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <item slot="0" material="stone sword" unbreakable="true"/>
+        <item slot="1" material="bow" unbreakable="true"/>
+        <item slot="2" material="golden apple"/>
+        <item slot="8" material="arrow" amount="12"/>
+        <leggings material="chainmail leggings" enchantment="protection projectile:3" unbreakable="true"/>
+        <boots material="iron boots" unbreakable="true"/>
+        <game-mode>adventure</game-mode>
+    </kit>
+    <kit id="red-kit" parent="spawn-kit">
+        <helmet color="993333" unbreakable="true" material="leather helmet"/>
+        <chestplate color="993333" unbreakable="true" material="leather chestplate"/>
+    </kit>
+    <kit id="blue-kit" parent="spawn-kit">
+        <helmet locked="true" color="334CB2" unbreakable="true" material="leather helmet"/>
+        <chestplate locked="true" color="334CB2" unbreakable="true" material="leather chestplate"/>
+    </kit>
+</kits>
+<spawns>
+    <spawn team="red-team" kit="red-kit" yaw="180" pitch="-20">
+        <region>
+            <cuboid min="-0.5,4,23.5" max="1.5,4,21.5"/>
+        </region>
+    </spawn>
+    <spawn team="blue-team" kit="blue-kit" yaw="0" pitch="-20">
+        <region>
+            <cuboid min="1.5,4,-22.5" max="-0.5,4,-20.5"/>
+        </region>
+    </spawn>
+    <default yaw="180">
+        <region>
+            <cuboid min="-1.5,21,14.5" max="1.5,21,13.5"/>
+        </region>
+    </default>
+</spawns>
+<respawn delay="5s"/>
+<flags flag-proximity-metric="none" net-proximity-metric="none" required="false">
+    <flag id="flag" name="Flag" color="lime" shared="true" pickup-filter="above-or-below">
+        <post id="center-post" recover-time="8s" respawn-time="4">
+            <block>0.5,5,0.5</block>
+        </post>
+        <pickup-kit force="true">
+            <potion duration="oo">speed</potion>
+        </pickup-kit>
+        <drop-kit force="true">
+            <potion duration="0">speed</potion>>
+        </drop-kit>
+        <net points="1" region="blue-spawn" capture-filter="only-blue"/>
+        <net points="1" region="red-spawn" capture-filter="only-red"/>
+    </flag>
+</flags>
+<score/>
+<time result="score" overtime="1m" max-overtime="5m">8m</time>
+<filters>
+    <team id="only-red">red-team</team>
+    <team id="only-blue">blue-team</team>
+    <all id="red-team-carrying-flag">
+        <team>red-team</team>
+        <carrying-flag>flag</carrying-flag>
+    </all>
+    <all id="blue-team-carrying-flag">
+        <team>blue-team</team>
+        <carrying-flag>flag</carrying-flag>
+    </all>
+    <any id="above-or-below">
+        <not>
+            <cuboid min="2,5,2" max="-2,3,-2"/>
+        </not>
+    </any>
+</filters>
+<regions>
+    <union id="spawn-points">
+        <cuboid id="red-spawn-point" min="-0.5,4.25,23.5" max="1.5,4.25,21.5"/>
+        <cuboid id="blue-spawn-point" min="1.5,4.25,-22.5" max="-0.5,4.25,-20.5"/>
+    </union>
+    <union id="sides">
+        <rectangle id="red-side" min="-8,1" max="-43,-10"/>
+        <rectangle id="blue-side" min="9,0" max="44,11"/>
+    </union>
+    <union id="nets">
+        <cuboid id="red-net" min="-33,1,0" max="-42,4,-9"/>
+        <cuboid id="blue-net" min="34,1,1" max="43,4,10"/>
+    </union>
+    <union id="spawns">
+        <cuboid id="red-spawn" min="-1,2,24" max="2,8,21"/>
+        <cuboid id="blue-spawn" min="2,2,-23" max="-1,8,-20"/>
+    </union>
+    <apply block="never" region="everywhere" message="You may not edit the map!"/>
+</regions>
+<proximity-alarms>
+    <proximity-alarm message="You are running to the wrong goal!" flare-radius="0" region="blue-side" detect="red-team-carrying-flag" notify="red-team-carrying-flag"/>
+    <proximity-alarm message="You are running to the wrong goal!" flare-radius="0" region="red-side" detect="blue-team-carrying-flag" notify="blue-team-carrying-flag"/>
+</proximity-alarms>
+<portals>
+    <portal observers="never" filter="red-team-carrying-flag" region="red-net" destination="red-spawn-point" yaw="@180" pitch="@-20"/>
+    <portal observers="never" filter="blue-team-carrying-flag" region="blue-net" destination="blue-spawn-point" yaw="0" pitch="@-20"/>
+</portals>
+<toolrepair>
+    <tool>stone sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemremove>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>chainmail leggings</item>
+    <item>iron boots</item>
+</itemremove>
+<kill-rewards>
+    <kill-reward>
+        <item material="golden apple"/>
+        <item material="arrow" amount="3"/>
+    </kill-reward>
+</kill-rewards>
+<disabledamage>
+    <damage>fall</damage>
+</disabledamage>
+<hunger>
+    <depletion>off</depletion>
+</hunger>
+<timelock>on</timelock>
+</map>

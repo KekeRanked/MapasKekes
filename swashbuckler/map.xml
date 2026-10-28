@@ -1,0 +1,245 @@
+<map proto="1.4.0">
+<name>Swashbuckler</name>
+<original>flagfootballswashbuckler</original>
+<slug>flagfootballswashbuckler</slug>
+<version>2.1.2</version>
+<objective>Capture the flag as many times as possible in eight minutes!</objective>
+<gamemode>ffb</gamemode>
+<authors>
+    <author uuid="d3814d5a-3d37-42f2-9db8-916846bb70ad"/> <!-- AlmightyBread -->
+    <author uuid="38e8192e-8a81-4dba-a506-6c8e16f6929c"/> <!-- GoldenOre -->
+</authors>
+<teams>
+    <team id="red-team" color="dark red" max="5">Red</team>
+    <team id="blue-team" color="blue" max="5">Blue</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <item slot="0" material="stone sword" name="Salty Sword" unbreakable="true"/>
+        <item slot="1" material="bow" name="Silver Bow" unbreakable="true"/>
+        <item slot="2" material="golden apple"/>
+        <item slot="8" material="arrow" amount="12"/>
+        <leggings material="chainmail leggings" enchantment="protection projectile:3" unbreakable="true"/>
+        <boots material="iron boots" unbreakable="true"/>
+        <game-mode>adventure</game-mode>
+    </kit>
+    <kit id="red-kit" parent="spawn-kit">
+        <helmet color="993333" unbreakable="true" material="leather helmet"/>
+        <chestplate color="993333" unbreakable="true" material="leather chestplate"/>
+    </kit>
+    <kit id="blue-kit" parent="spawn-kit">
+        <helmet locked="true" color="334CB2" unbreakable="true" material="leather helmet"/>
+        <chestplate locked="true" color="334CB2" unbreakable="true" material="leather chestplate"/>
+    </kit>
+</kits>
+<spawns>
+    <spawn team="red-team" kit="red-kit" yaw="135">
+        <region>
+            <cuboid min="100.5,17.25,-119.5" max="99.5,17.25,-120.5"/>
+        </region>
+    </spawn>
+    <spawn team="blue-team" kit="blue-kit" yaw="-45">
+        <region>
+            <cuboid min="64.5,17.25,-155.5" max="65.5,17.25,-154.5"/>
+        </region>
+    </spawn>
+    <default yaw="-135">
+        <region>
+            <cuboid min="75.5,29,-94.5" max="77.5,29,-96.5"/>
+        </region>
+    </default>
+</spawns>
+<respawn delay="4s"/>
+<flags flag-proximity-metric="none" net-proximity-metric="none" required="false">
+    <flag id="flag" name="Flag" color="gray" shared="true" pickup-filter="above-or-below">
+        <post id="center-post" recover-time="8s" respawn-time="4">
+            <block>82.5,12,-137.5</block>
+        </post>
+        <pickup-kit force="true">
+            <potion duration="oo">speed</potion>
+        </pickup-kit>
+        <drop-kit force="true">
+            <potion duration="0">speed</potion>>
+        </drop-kit>
+        <net points="1" region="blue-spawn" capture-filter="only-blue"/>
+        <net points="1" region="red-spawn" capture-filter="only-red"/>
+    </flag>
+</flags>
+<score/>
+<time result="score" overtime="1m" max-overtime="5m">8m</time>
+<filters>
+    <team id="only-red">red-team</team>
+    <team id="only-blue">blue-team</team>
+    <all id="red-team-carrying-flag">
+        <team>red-team</team>
+        <carrying-flag>flag</carrying-flag>
+    </all>
+    <all id="blue-team-carrying-flag">
+        <team>blue-team</team>
+        <carrying-flag>flag</carrying-flag>
+    </all>
+    <any id="above-or-below">
+        <not>
+            <cuboid min="84,12,-139" max="80,10,-135"/>
+        </not>
+    </any>
+</filters>
+<regions>
+    <union id="spawn-points">
+        <cuboid id="red-spawn-point" min="100.5,17.25,-119.5" max="99.5,17.25,-120.5"/>
+        <cuboid id="blue-spawn-point" min="64.5,17.25,-155.5" max="65.5,17.25,-154.5"/>
+    </union>
+    <union id="sides">
+        <union id="red-side">
+            <rectangle min="83,-130" max="82,-129"/>
+            <rectangle min="82,-131" max="81,-128"/>
+            <rectangle min="81,-132" max="80,-127"/>
+            <rectangle min="80,-133" max="79,-126"/>
+            <rectangle min="79,-134" max="78,-125"/>
+            <rectangle min="78,-135" max="77,-124"/>
+            <rectangle min="77,-136" max="76,-123"/>
+            <rectangle min="76,-137" max="75,-122"/>
+            <rectangle min="75,-138" max="74,-121"/>
+            <rectangle min="74,-137" max="73,-120"/>
+            <rectangle min="73,-136" max="72,-119"/>
+            <rectangle min="72,-135" max="71,-118"/>
+            <rectangle min="71,-134" max="70,-117"/>
+            <rectangle min="70,-133" max="69,-116"/>
+            <rectangle min="69,-132" max="68,-115"/>
+            <rectangle min="68,-131" max="67,-114"/>
+            <rectangle min="67,-130" max="66,-113"/>
+            <rectangle min="66,-129" max="65,-112"/>
+            <rectangle min="65,-128" max="64,-111"/>
+            <rectangle min="64,-127" max="63,-110"/>
+            <rectangle min="63,-126" max="62,-109"/>
+            <rectangle min="62,-125" max="61,-108"/>
+            <rectangle min="61,-124" max="60,-107"/>
+            <rectangle min="60,-123" max="59,-106"/>
+            <rectangle min="59,-122" max="58,-105"/>
+            <rectangle min="58,-121" max="57,-104"/>
+            <rectangle min="57,-120" max="56,-103"/>
+            <rectangle min="56,-119" max="55,-102"/>
+            <rectangle min="55,-118" max="54,-101"/>
+            <rectangle min="54,-117" max="53,-100"/>
+            <rectangle min="53,-116" max="52,-99"/>
+            <rectangle min="52,-115" max="51,-98"/>
+            <rectangle min="51,-114" max="50,-97"/>
+            <rectangle min="50,-113" max="49,-98"/>
+            <rectangle min="49,-112" max="48,-99"/>
+            <rectangle min="48,-111" max="47,-100"/>
+            <rectangle min="47,-110" max="46,-101"/>
+            <rectangle min="46,-109" max="45,-102"/>
+            <rectangle min="45,-108" max="44,-103"/>
+            <rectangle min="44,-107" max="43,-104"/>
+            <rectangle min="43,-106" max="42,-105"/>
+        </union>
+        <union id="blue-side">
+            <rectangle min="82,-145" max="83,-146"/>
+            <rectangle min="83,-144" max="84,-147"/>
+            <rectangle min="84,-143" max="85,-148"/>
+            <rectangle min="85,-142" max="86,-149"/>
+            <rectangle min="86,-141" max="87,-150"/>
+            <rectangle min="87,-140" max="88,-151"/>
+            <rectangle min="88,-139" max="89,-152"/>
+            <rectangle min="89,-138" max="90,-153"/>
+            <rectangle min="90,-137" max="91,-154"/>
+            <rectangle min="91,-138" max="92,-155"/>
+            <rectangle min="92,-139" max="93,-156"/>
+            <rectangle min="93,-140" max="94,-157"/>
+            <rectangle min="94,-141" max="95,-158"/>
+            <rectangle min="95,-142" max="96,-159"/>
+            <rectangle min="96,-143" max="97,-160"/>
+            <rectangle min="97,-144" max="98,-161"/>
+            <rectangle min="98,-145" max="99,-162"/>
+            <rectangle min="99,-146" max="100,-163"/>
+            <rectangle min="100,-147" max="101,-164"/>
+            <rectangle min="101,-148" max="102,-165"/>
+            <rectangle min="102,-149" max="103,-166"/>
+            <rectangle min="103,-150" max="104,-167"/>
+            <rectangle min="104,-151" max="105,-168"/>
+            <rectangle min="105,-152" max="106,-169"/>
+            <rectangle min="106,-153" max="107,-170"/>
+            <rectangle min="107,-154" max="108,-171"/>
+            <rectangle min="108,-155" max="109,-172"/>
+            <rectangle min="109,-156" max="110,-173"/>
+            <rectangle min="110,-157" max="111,-174"/>
+            <rectangle min="111,-158" max="112,-175"/>
+            <rectangle min="112,-159" max="113,-176"/>
+            <rectangle min="113,-160" max="114,-177"/>
+            <rectangle min="114,-161" max="115,-178"/>
+            <rectangle min="115,-162" max="116,-177"/>
+            <rectangle min="116,-163" max="117,-176"/>
+            <rectangle min="117,-164" max="118,-175"/>
+            <rectangle min="118,-165" max="119,-174"/>
+            <rectangle min="119,-166" max="120,-173"/>
+            <rectangle min="120,-167" max="121,-172"/>
+            <rectangle min="121,-168" max="122,-171"/>
+            <rectangle min="122,-169" max="123,-170"/>
+        </union>
+    </union>
+    <union id="nets">
+        <union id="red-net">
+            <cuboid min="60,8,-105" max="59,11,-106"/>
+            <cuboid min="59,8,-104" max="58,11,-107"/>
+            <cuboid min="58,8,-105" max="57,11,-108"/>
+            <cuboid min="57,8,-106" max="56,11,-109"/>
+            <cuboid min="56,8,-107" max="55,11,-110"/>
+            <cuboid min="55,8,-108" max="54,11,-111"/>
+            <cuboid min="54,8,-109" max="53,11,-112"/>
+            <cuboid min="53,8,-110" max="52,11,-113"/>
+            <cuboid min="52,8,-111" max="51,11,-114"/>
+            <cuboid min="51,8,-112" max="50,11,-115"/>
+            <cuboid min="50,8,-113" max="49,11,-114"/>
+        </union>
+        <union id="blue-net">
+            <cuboid min="105,8,-170" max="106,11,-169"/>
+            <cuboid min="106,8,-171" max="107,11,-168"/>
+            <cuboid min="107,8,-170" max="108,11,-167"/>
+            <cuboid min="108,8,-169" max="109,11,-166"/>
+            <cuboid min="109,8,-168" max="110,11,-165"/>
+            <cuboid min="110,8,-167" max="111,11,-164"/>
+            <cuboid min="111,8,-166" max="112,11,-163"/>
+            <cuboid min="112,8,-165" max="113,11,-162"/>
+            <cuboid min="113,8,-164" max="114,11,-161"/>
+            <cuboid min="114,8,-163" max="115,11,-160"/>
+            <cuboid min="115,8,-162" max="116,11,-161"/>
+        </union>
+    </union>
+    <union id="spawns">
+        <cuboid id="red-spawn" min="101,15,-119" max="99,21,-121"/>
+        <cuboid id="blue-spawn" min="64,15,-156" max="66,21,-154"/>
+    </union>
+    <apply block="never" region="everywhere" message="You may not edit the map!"/>
+</regions>
+<proximity-alarms>
+    <proximity-alarm message="You are running to the wrong goal!" flare-radius="0" region="blue-side" detect="red-team-carrying-flag" notify="red-team-carrying-flag"/>
+    <proximity-alarm message="You are running to the wrong goal!" flare-radius="0" region="red-side" detect="blue-team-carrying-flag" notify="blue-team-carrying-flag"/>
+</proximity-alarms>
+<portals>
+    <portal observers="never" filter="red-team-carrying-flag" region="red-net" destination="red-spawn-point" yaw="@135"/>
+    <portal observers="never" filter="blue-team-carrying-flag" region="blue-net" destination="blue-spawn-point" yaw="@-45"/>
+</portals>
+<toolrepair>
+    <tool>stone sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemremove>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>chainmail leggings</item>
+    <item>iron boots</item>
+</itemremove>
+<kill-rewards>
+    <kill-reward>
+        <item material="golden apple"/>
+        <item material="arrow" amount="3"/>
+    </kill-reward>
+</kill-rewards>
+<disabledamage>
+    <damage>fall</damage>
+</disabledamage>
+<hunger>
+    <depletion>off</depletion>
+</hunger>
+<timelock>on</timelock>
+</map>

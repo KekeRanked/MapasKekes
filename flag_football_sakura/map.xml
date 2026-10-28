@@ -1,0 +1,146 @@
+<map proto="1.4.2">
+<name>Flag Football: Sakura</name>
+<version>2.0.5</version>
+<gamemode>ffb</gamemode>
+<objective>Capture the flag as many times as possible in eight minutes!</objective>
+<time result="score" overtime="1m" max-overtime="5m">8m</time>
+<authors>
+    <author uuid="b83f7de9-9d69-468a-8cea-dc3864b584cb"/> <!-- nuttydragon -->
+</authors>
+<contributors>
+    <contributor uuid="fe3608b7-d105-4029-8800-34b3147065b6" contribution="Supplied beautiful trees"/> <!-- rockymine -->
+    <contributor uuid="d3814d5a-3d37-42f2-9db8-916846bb70ad" contribution="Conceptualization."/> <!-- AlmightyBread -->
+    <contributor uuid="0a359aef-794b-4d88-97ca-5672d9421532" contribution="Aesthetics"/> <!-- xTrina -->
+    <contributor uuid="76b4cc36-f899-4c42-8ad5-f9ba48ffd4c4" contribution="Aesthetics"/> <!-- slayersource -->
+    <contributor uuid="c1d94f18-6ea3-495a-8d1b-7d9eaf393f64" contribution="Architectual accuracy"/> <!-- Sqyid -->
+</contributors>
+<teams>
+    <team id="blue-team" color="blue" max="5">Blue</team>
+    <team id="red-team" color="dark red" max="5">Red</team>
+</teams>
+<kits>
+    <kit id="default-kit">
+        <effect>night vision</effect>
+    </kit>
+    <kit id="spawn-kit" parents="default-kit">
+        <clear/>
+        <item slot="0" unbreakable="true" name="Katana" material="stone sword"/>
+        <item slot="1" unbreakable="true" name="Longbow" material="bow"/>
+        <item slot="2" material="golden apple"/>
+        <item slot="8" amount="12" material="arrow"/>
+        <leggings unbreakable="true" enchantment="protection projectile:3" material="chainmail leggings"/>
+        <boots unbreakable="true" material="iron boots"/>
+        <game-mode>adventure</game-mode>
+    </kit>
+    <kit id="blue-kit" parent="spawn-kit">
+        <helmet unbreakable="true" color="334CB2" material="leather helmet"/>
+        <chestplate unbreakable="true" color="334CB2" material="leather chestplate"/>
+    </kit>
+    <kit id="red-kit" parent="spawn-kit">
+        <helmet unbreakable="true" color="993333" material="leather helmet"/>
+        <chestplate unbreakable="true" color="993333" material="leather chestplate"/>
+    </kit>
+</kits>
+<spawns>
+    <default kit="default-kit">
+        <region yaw="0" pitch="40">
+            <cylinder base="45.5,39,0.5" radius="1" height="0"/>
+        </region>
+    </default>
+    <spawn team="blue-team" kit="blue-kit">
+        <region yaw="180" pitch="-20">
+            <point>45.5,16,18.5</point>
+        </region>
+    </spawn>
+    <spawn team="red-team" kit="red-kit">
+        <region yaw="0" pitch="-20">
+            <point>45.5,16,-17.5</point>
+        </region>
+    </spawn>
+</spawns>
+<filters>
+    <all id="blue-team-carrying-flag">
+        <team id="only-blue">blue-team</team>
+        <carrying-flag>flag</carrying-flag>
+    </all>
+    <all id="red-team-carrying-flag">
+        <team id="only-red">red-team</team>
+        <carrying-flag>flag</carrying-flag>
+    </all>
+    <any id="above-or-below">
+        <not>
+            <cuboid min="47,15,2" max="43,13,-2"/>
+        </not>
+    </any>
+</filters>
+<regions>
+    <union id="spawn-points">
+        <point id="blue-spawn-point">45.5,16.25,18.5</point>
+        <point id="red-spawn-point">45.5,16.25,-17.5</point>
+    </union>
+    <union id="sides">
+        <rectangle id="blue-side" min="37,5" max="0,-4"/>
+        <rectangle id="red-side" min="54,-4" max="91,5"/>
+    </union>
+    <union id="nets">
+        <cuboid id="blue-net" min="7,11,4" max="0,14,-3"/>
+        <cuboid id="red-net" min="84,11,-3" max="91,14,4"/>
+    </union>
+    <union id="spawns">
+        <cuboid id="blue-spawn" min="43,12,20" max="47,18,11"/>
+        <cuboid id="red-spawn" min="43,12,-19" max="47,18,-10"/>
+    </union>
+    <apply block="never" use="never"/>
+</regions>
+<flags flag-proximity-metric="none" net-proximity-metric="none" required="false">
+    <flag id="flag" name="Flag" color="pink" shared="true" pickup-filter="above-or-below">
+        <post id="center-post" recover-time="8s" respawn-time="4">
+            <block>45.5,15,0.5</block>
+        </post>
+        <pickup-kit force="true">
+            <effect>speed</effect>
+        </pickup-kit>
+        <drop-kit force="true">
+            <effect duration="0">speed</effect>
+        </drop-kit>
+        <net points="1" region="blue-spawn" capture-filter="only-blue"/>
+        <net points="1" region="red-spawn" capture-filter="only-red"/>
+    </flag>
+</flags>
+<score/>
+<portals>
+    <portal observers="never" filter="blue-team-carrying-flag" region="blue-net" destination="blue-spawn-point" yaw="@180"/>
+    <portal observers="never" filter="red-team-carrying-flag" region="red-net" destination="red-spawn-point" yaw="@0"/>
+</portals>
+<proximity-alarms>
+    <proximity-alarm message="You are running to the wrong goal!" flare-radius="0" region="red-side" detect="blue-team-carrying-flag" notify="blue-team-carrying-flag"/>
+    <proximity-alarm message="You are running to the wrong goal!" flare-radius="0" region="blue-side" detect="red-team-carrying-flag" notify="red-team-carrying-flag"/>
+</proximity-alarms>
+<toolrepair>
+    <tool>stone sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemremove>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>chainmail leggings</item>
+    <item>iron boots</item>
+</itemremove>
+<itemkeep>
+    <item>stone sword</item>
+    <item>bow</item>
+    <item>golden apple</item>
+    <item>arrow</item>
+</itemkeep>
+<kill-reward>
+    <item material="golden apple"/>
+    <item amount="3" material="arrow"/>
+</kill-reward>
+<respawn delay="5s" auto="true"/>
+<disabledamage>
+    <damage>fall</damage>
+</disabledamage>
+<hunger>
+    <depletion>off</depletion>
+</hunger>
+</map>

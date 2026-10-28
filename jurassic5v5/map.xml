@@ -1,0 +1,264 @@
+<map proto="1.4.2">
+<name>Jurassic 5v5</name>
+<version>1.0.0</version>
+<objective>Capture the enemy's wool!</objective>
+<time result="objectives" max-overtime="10m" overtime="10m">25m</time>
+<authors>
+    <author uuid="0c44ca5a-6a42-49b7-81f2-58dc6d2ae3e9"/>
+    <author uuid="70c5c702-4e70-457b-8d7b-0e22010dc590" contribution="5v5 edit of the original 8v8 map"/> <!-- ocal -->
+</authors>
+<contributors>
+    <contributor uuid="fe3608b7-d105-4029-8800-34b3147065b6" contribution="Most of obs-spawn Dino"/>
+</contributors>
+<teams>
+    <team id="purple-team" color="dark purple" max="5" max-overfill="5">Purple</team>
+    <team id="yellow-team" color="yellow" max="5" max-overfill="5">Yellow</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <clear/>
+        <item slot="0" unbreakable="true" material="iron sword"/>
+        <item slot="1" unbreakable="true" material="bow"/>
+        <item slot="28" amount="40" material="arrow"/>
+        <item slot="2" unbreakable="true" material="iron pickaxe">
+            <enchantment>efficiency</enchantment>
+        </item>
+        <item slot="3" unbreakable="true" material="iron axe">
+            <enchantment>efficiency</enchantment>
+        </item>
+        <item slot="4" material="water bucket"/>
+        <item slot="5" material="golden apple"/>
+        <item slot="6" unbreakable="true" material="iron spade"/>
+        <item slot="7" amount="64" material="glass"/>
+        <item slot="8" amount="64" material="wood" damage="4"/>
+        <item slot="35" amount="64" material="wood" damage="4"/>
+        <effect duration="5">heal</effect>
+    </kit>
+    <kit id="purple-kit" parents="spawn-kit">
+        <helmet unbreakable="true" color="AA00AA" material="leather helmet"/>
+        <chestplate unbreakable="true" color="AA00AA" material="leather chestplate">
+            <enchantment>projectile_protection</enchantment>
+        </chestplate>
+    </kit>
+    <kit id="yellow-kit" parents="spawn-kit">
+        <helmet unbreakable="true" color="FFFF55" material="leather helmet"/>
+        <chestplate unbreakable="true" color="FFFF55" material="leather chestplate">
+            <enchantment>projectile_protection</enchantment>
+        </chestplate>
+    </kit>
+</kits>
+<spawns>
+    <default>
+        <region yaw="-90">
+            <point>-318.5,48,65.5</point>
+        </region>
+    </default>
+    <spawn team="purple-team" kit="purple-kit">
+        <region yaw="0">
+            <point>-221.5,5,-51.5</point>
+        </region>
+    </spawn>
+    <spawn team="yellow-team" kit="yellow-kit">
+        <region yaw="180">
+            <point>-221.5,5,174.5</point>
+        </region>
+    </spawn>
+</spawns>
+<filters>
+    <not id="purple-in-wr">
+        <any>
+            <team id="only-yellow">yellow-team</team>
+            <material>chest</material>
+        </any>
+    </not>
+    <not id="yellow-in-wr">
+        <any>
+            <team id="only-purple">purple-team</team>
+            <material>chest</material>
+        </any>
+    </not>
+    <all id="only-iron-regen">
+        <material id="only-iron">iron block</material>
+        <cause>world</cause>
+    </all>
+    <not id="deny-void">
+        <void/>
+    </not>
+</filters>
+<regions>
+    <union id="spawns">
+        <cuboid id="purple-spawn" min="-239,0,-69" max="-204,25,-25"/>
+        <cuboid id="yellow-spawn" min="-239,0,148" max="-204,25,192"/>
+    </union>
+    <union id="wool-rooms">
+        <rectangle id="orange-for-purple" min="-278,165" max="-265,181"/>
+        <rectangle id="lime-for-yellow" min="-278,-58" max="-265,-42"/>
+    </union>
+    <complement id="not-map">
+        <everywhere/>
+        <union>
+            <rectangle min="-242,13" max="-206,110"/>
+            <rectangle min="-275,-2" max="-242,125"/>
+        </union>
+    </complement>
+    <union id="spawner-regions">
+        <point id="spawner-spawn">-289.5,12,61.5</point>
+        <cylinder id="spawner-player" base="-289.5,12,61.5" radius="5" height="5"/>
+        <cuboid id="spawner" min="-291,11,60" max="-288,14,63"/>
+    </union>
+    <apply enter="only-purple" region="purple-spawn" message="You may not enter the enemy team's spawn!"/>
+    <apply enter="only-yellow" region="yellow-spawn" message="You may not enter the enemy team's spawn!"/>
+    <apply enter="only-purple" region="orange-for-purple" message="You may not modify or enter your own wool room!"/>
+    <apply enter="only-yellow" region="lime-for-yellow" message="You may not modify or enter your own wool room!"/>
+    <apply block="never" region="spawner" message="You may not modify the spawner!"/>
+    <apply block-break="only-iron" block-place="only-iron-regen" region="spawns" message="You may only break iron blocks at spawn!"/>
+    <apply use="only-purple" block="purple-in-wr" region="orange-for-purple"/>
+    <apply use="only-yellow" block="yellow-in-wr" region="lime-for-yellow"/>
+    <apply block-place="deny-void" region="not-map" message="You may not build in the void!"/>
+</regions>
+<wools craftable="false" wool-proximity-metric="none" monument-proximity-metric="closest block">
+    <wool team="purple-team" color="orange" location="-271.5,11.5,173.5">
+        <monument>
+            <block>-222,6,-29</block>
+        </monument>
+    </wool>
+    <wool team="yellow-team" color="lime" location="-271.5,11.5,-50.5">
+        <monument>
+            <block>-222,6,151</block>
+        </monument>
+    </wool>
+</wools>
+<itemremove> <!-- Items addded to this section are deleted if they are dropped in any way onto the floor (add stone slabs to this)-->
+    <item>leather chestplate</item>
+    <item>chainmail leggings</item>
+    <item>leather boots</item>
+    <item>string</item>
+    <item>apple</item>
+    <item>sugar cane</item>
+    <item>clay ball</item>
+    <item>stone plate</item>
+    <item>iron plate</item>
+    <item>sand</item>
+    <item>redstone</item>
+    <item>redstone torch off</item>
+    <item>redstone torch on</item>
+    <item>skull</item>
+    <item>carpet</item>
+    <item>wood stairs</item>
+    <item>spruce wood stairs</item>
+    <item>birch wood stairs</item>
+    <item>jungle wood stairs</item>
+    <item>acacia stairs</item>
+    <item>dark oak stairs</item>
+    <item>wood step</item>
+    <item>stone button</item>
+    <item>sign</item>
+    <item>lever</item>
+    <item>redstone comparator</item>
+    <item>ladder</item>
+    <item>iron door</item>
+    <item>trap door</item>
+    <item>fence</item>
+</itemremove>
+<itemkeep> <!-- Items added to this section are removed upon death, but can still be manually dropped -->
+    <item>wood door</item>
+    <item>wood button</item>
+    <item>wood plate</item>
+    <item>wood</item>
+    <item>log</item>
+    <item>glass</item>
+    <item>arrow</item>
+    <item>iron sword</item>
+    <item>iron pickaxe</item>
+    <item>iron spade</item>
+    <item>iron axe</item>
+    <item>water bucket</item>
+    <item>bow</item>
+</itemkeep>
+<block-drops> <!-- This prevents planks from dropping when mined and ensures flint drops -->
+    <rule wrong-tool="true">
+        <region>
+            <rectangle min="-oo,-oo" max="oo,oo"/>
+        </region>
+        <filter>
+            <any>
+                <material>gravel</material>
+            </any>
+        </filter>
+        <drops>
+            <item material="flint"/>
+        </drops>
+    </rule>
+    <rule>
+        <region>
+            <rectangle min="-oo,-oo" max="oo,oo"/>
+        </region>
+        <filter>
+            <all>
+                <material>wood</material>
+                <cause>mine</cause>
+            </all>
+        </filter>
+        <drops>
+            <item chance="0" material="wood"/>
+        </drops>
+    </rule>
+</block-drops>
+<renewables>
+    <renewable renew-filter="only-iron" region="spawns" sound="true" particles="true"/>
+</renewables>
+<spawners>
+    <spawner spawn-region="spawner-spawn" player-region="spawner-player" delay="12s">
+        <item material="golden apple"/>
+    </spawner>
+</spawners>
+<toolrepair>
+    <tool>iron sword</tool>
+    <tool>bow</tool>
+    <tool>iron pickaxe</tool>
+    <tool>iron axe</tool>
+</toolrepair>
+<itemremove>
+    <item>glass</item>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>golden carrot</item>
+    <item>redstone</item>
+    <item>redstone torch on</item>
+    <item>apple</item>
+    <item>seeds</item>
+    <item>sapling</item>
+    <item>31</item>
+    <item>37</item>
+    <item>38</item>
+    <item>175</item>
+    <item>338</item>
+    <item>66</item>
+</itemremove>
+<kill-reward>
+    <item amount="32" material="wood" damage="4"/>
+    <item amount="16" material="glass"/>
+    <item material="golden apple"/>
+    <item amount="10" material="arrow"/>
+</kill-reward>
+<crafting>
+    <disable>iron trapdoor</disable>
+    <disable>minecart</disable>
+    <disable>boat</disable>
+</crafting>
+<maxbuildheight>21</maxbuildheight>
+<hunger>
+    <depletion>off</depletion>
+</hunger>
+<respawn delay="5s" auto="true" blackout ="true"/>
+<item-mods>
+    <rule>
+        <match>
+            <material>iron chestplate</material>
+        </match>
+        <modify>
+            <enchantment>projectile_protection</enchantment>
+        </modify>
+    </rule>
+</item-mods>
+</map>

@@ -1,0 +1,137 @@
+<map proto="1.4.0">
+<name>Flag Football: Rampart</name>
+<version>1.1.12</version>
+<objective>Capture the flag as many times as possible in eight minutes!</objective>
+<gamemode>ffb</gamemode>
+<authors>
+    <author uuid="b8add1ba-8e13-4673-bc73-4e3ed524d40e"/> <!--  Blazy36  -->
+</authors>
+<contributors>
+    <contributor uuid="d3814d5a-3d37-42f2-9db8-916846bb70ad" contribution="Suggestions"/> <!-- AlmightyBread -->
+</contributors>
+<teams>
+    <team id="green-team" color="dark green" max="5">Green</team>
+    <team id="cyan-team" color="dark aqua" max="5">Cyan</team>
+</teams>
+<kits>
+    <kit id="spawn-kit">
+        <item slot="0" material="stone sword" unbreakable="true"/>
+        <item slot="1" material="bow" unbreakable="true"/>
+        <item slot="2" material="golden apple"/>
+        <item slot="8" material="arrow" amount="12"/>
+        <leggings material="chainmail leggings" enchantment="protection projectile:3" unbreakable="true"/>
+        <boots material="iron boots" unbreakable="true"/>
+        <game-mode>adventure</game-mode>
+    </kit>
+    <kit id="green-kit" parent="spawn-kit">
+        <helmet color="00AA00" unbreakable="true" material="leather helmet"/>
+        <chestplate color="00AA00" unbreakable="true" material="leather chestplate"/>
+    </kit>
+    <kit id="cyan-kit" parent="spawn-kit">
+        <helmet locked="true" color="00AAAA" unbreakable="true" material="leather helmet"/>
+        <chestplate locked="true" color="00AAAA" unbreakable="true" material="leather chestplate"/>
+    </kit>
+</kits>
+<spawns>
+    <spawn team="green-team" kit="green-kit" yaw="-90">
+        <region>
+            <point>370.5,34.1,-278.5</point>
+        </region>
+    </spawn>
+    <spawn team="cyan-team" kit="cyan-kit" yaw="90">
+        <region>
+            <point>378.5,34.1,-248.5</point>
+        </region>
+    </spawn>
+    <default yaw="0">
+        <region>
+            <cylinder base="374.5,65,-286.5" radius="1" height="0"/>
+        </region>
+    </default>
+</spawns>
+<respawn delay="5s"/>
+<flags flag-proximity-metric="none" net-proximity-metric="none" required="false">
+    <flag id="flag" name="Flag" color="gray" shared="true" pickup-filter="above-or-below">
+        <post id="center-post" recover-time="8s" respawn-time="4">
+            <block>374.5,32,-263.5</block>
+        </post>
+        <pickup-kit force="true">
+            <potion duration="oo">speed</potion>
+        </pickup-kit>
+        <drop-kit force="true">
+            <potion duration="0">speed</potion>
+        </drop-kit>
+        <net points="1" region="green-spawn" capture-filter="only-green"/>
+        <net points="1" region="cyan-spawn" capture-filter="only-cyan"/>
+    </flag>
+</flags>
+<score/>
+<time result="score" overtime="1m" max-overtime="5m">8m</time>
+<filters>
+    <team id="only-green">green-team</team>
+    <team id="only-cyan">cyan-team</team>
+    <all id="green-team-carrying-flag">
+        <team>green-team</team>
+        <carrying-flag>flag</carrying-flag>
+    </all>
+    <all id="cyan-team-carrying-flag">
+        <team>cyan-team</team>
+        <carrying-flag>flag</carrying-flag>
+    </all>
+    <any id="above-or-below">
+        <not>
+            <cuboid min="376,32,-261" max="372,30,-265"/>
+        </not>
+    </any>
+</filters>
+<regions>
+    <union id="spawn-points">
+        <point id="cyan-spawn-point">378.5,34.35,-248.5</point>
+        <point id="green-spawn-point">370.5,34.35,-278.5</point>
+    </union>
+    <union id="sides">
+        <rectangle id="cyan-side" min="384,-259" max="418,-268"/>
+        <rectangle id="green-side" min="365,-268" max="331,-259"/>
+    </union>
+    <union id="nets">
+        <cuboid id="cyan-net" min="339,31,-260" max="332,34,-267"/>
+        <cuboid id="green-net" min="410,31,-267" max="417,34,-260"/>
+    </union>
+    <union id="spawns">
+        <cuboid id="cyan-spawn" min="379,33,-249" max="378,38,-248"/>
+        <cuboid id="green-spawn" min="371,33,-279" max="370,38,-278"/>
+    </union>
+    <apply block="never" region="everywhere" message="You may not edit the map!"/>
+</regions>
+<proximity-alarms>
+    <proximity-alarm message="You are running to the wrong goal!" flare-radius="0" region="cyan-side" detect="cyan-team-carrying-flag" notify="cyan-team-carrying-flag"/>
+    <proximity-alarm message="You are running to the wrong goal!" flare-radius="0" region="green-side" detect="green-team-carrying-flag" notify="green-team-carrying-flag"/>
+</proximity-alarms>
+<portals>
+    <portal observers="never" filter="cyan-team-carrying-flag" region="cyan-net" destination="cyan-spawn-point" yaw="@90"/>
+    <portal observers="never" filter="green-team-carrying-flag" region="green-net" destination="green-spawn-point" yaw="@-90"/>
+</portals>
+<toolrepair>
+    <tool>stone sword</tool>
+    <tool>bow</tool>
+</toolrepair>
+<itemremove>
+    <item>leather helmet</item>
+    <item>leather chestplate</item>
+    <item>chainmail leggings</item>
+    <item>iron boots</item>
+</itemremove>
+<kill-rewards>
+    <kill-reward>
+        <item material="golden apple"/>
+        <item material="arrow" amount="3"/>
+    </kill-reward>
+</kill-rewards>
+<disabledamage>
+    <damage>fall</damage>
+</disabledamage>
+<hunger>
+    <depletion>off</depletion>
+</hunger>
+<timelock>on</timelock>
+</map>
