@@ -1,0 +1,118 @@
+<map proto="1.4.2">
+<name>Shinobi</name>
+<version>1.3.6</version>
+<include id="conquest"/>
+<objective>Hold the flag for 200 seconds to win!</objective>
+<gamemode>kotf</gamemode>
+<authors>
+    <author uuid="74948888-fdb8-4446-9340-f7688c2435cc"/> <!-- Zero_Frosty -->
+</authors>
+<contributors>
+    <contributor uuid="a5495640-38f8-4a4d-aa66-36e40b3d6c7a"/> <!-- Lopes -->
+    <contributor uuid="430ec559-364a-4363-ac7a-2529050440ac" contribution="XML"/> <!-- mameBT -->
+</contributors>
+<teams>
+    <team id="blue" color="blue" max="5" max-overfill="5">Blue</team>
+    <team id="red" color="dark red" max="5" max-overfill="5">Red</team>
+</teams>
+<kits>
+    <kit id="flag-kit" force="true">
+        <effect amplifier="-3">health boost</effect>
+        <effect duration="3s" amplifier="2">absorption</effect>
+    </kit>
+    <kit id="reset-health" force="true">
+        <effect duration="0s" amplifier="0">health boost</effect>
+    </kit>
+    <kit id="spawn-kit" parent="conquest">
+        <item slot="7" amount="1" name="`rFlag Compass" lore="`9ⓘ `7Always points to the flag post or current flag carrier!`r" material="compass"/>
+        <effect duration="4s" amplifier="255">resistance</effect>
+    </kit>
+</kits>
+<spawns>
+    <default>
+        <region yaw="-45">
+            <point>-59.5,61,-59.5</point>
+        </region>
+    </default>
+    <spawn team="blue" kit="spawn-kit" filter="has-flag">
+        <region yaw="-135">
+            <point>-32.5,7,33.5</point>
+        </region>
+    </spawn>
+    <spawn team="red" kit="spawn-kit" filter="has-flag">
+        <region yaw="45">
+            <point>33.5,7,-32.5</point>
+        </region>
+    </spawn>
+</spawns>
+<filters>
+    <any id="has-flag">
+        <carrying-flag id="flag-carrier">flag</carrying-flag>
+        <not>
+            <same-team>
+                <filter id="flag-carrier"/>
+            </same-team>
+        </not>
+    </any>
+    <deny id="deny-flag-carrier">
+        <filter id="flag-carrier"/>
+    </deny>
+</filters>
+<regions>
+    <union id="spawns">
+        <union id="blue-spawn">
+            <circle center="-32.5,33.5" radius="14.5"/>
+            <cuboid min="-19,13,31" max="-11,oo,41"/>
+            <cuboid min="-39,13,12" max="-32,oo,19"/>
+        </union>
+        <union id="red-spawn">
+            <circle center="33.5,-32.5" radius="14.5"/>
+            <cuboid min="12,13,-40" max="20,oo,-30"/>
+            <cuboid min="33,13,-18" max="40,oo,-11"/>
+        </union>
+    </union>
+    <apply enter="deny-flag-carrier" region="spawns" message="You may not re-enter the spawns with the flag!"/>
+    <apply block="never" use="never"/>
+</regions>
+<spawners>
+    <spawners>
+        <spawner delay="8s" max-entities="1">
+            <spawn-region>
+                <point>0.5,9.25,0.5</point>
+            </spawn-region>
+            <player-region>
+                <cylinder base="0.5,8,0.5" height="4" radius="4"/>
+            </player-region>
+            <item material="golden apple"/>
+        </spawner>
+    </spawners>
+</spawners>
+<flags>
+    <flag id="flag"
+          name="Flag"
+          color="cyan"
+          shared="true"
+          points-rate="1"
+          compass-filter="always"
+          pickup-kit="flag-kit"
+          drop-kit="reset-health"
+          flag-proximity-metric="none"
+          show-respawn-on-pickup="true">
+        <post return-time="0s" respawn-time="23s">
+            <post name="Northwest Post" yaw="135">-14.5,13,-14.5</post>
+            <post name="Southeast Post" yaw="-45">15.5,13,15.5</post>
+        </post>
+    </flag>
+</flags>
+<score>
+    <limit>200</limit>
+</score>
+<respawn delay="6s" auto="true" spectate="true">
+    <message>
+        {"translate":"death.respawn.confirmed.waiting.flagDropped"}
+    </message>
+</respawn>
+<hunger>
+    <depletion>off</depletion>
+</hunger>
+</map>
