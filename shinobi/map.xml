@@ -1,6 +1,6 @@
 <map proto="1.4.2">
 <name>Shinobi</name>
-<version>1.3.8</version>
+<version>1.3.9</version>
 <!-- Inline gapple kill reward from the official PGM includes. -->
 <constants fallback="true">
     <constant id="gapple-name" delete="true"/>
@@ -167,7 +167,6 @@
           color="cyan"
           shared="true"
           points-rate="1"
-          compass-filter="always"
           pickup-kit="flag-kit"
           drop-kit="reset-health"
           flag-proximity-metric="none"
