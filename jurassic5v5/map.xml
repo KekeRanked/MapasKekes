@@ -86,6 +86,10 @@
     </not>
 </filters>
 <regions>
+    <union id="bridges">
+        <rectangle min="-226,121" max="-217,125"/>
+        <rectangle min="-226,-2" max="-217,2"/>
+    </union>
     <union id="spawns">
         <cuboid id="purple-spawn" min="-239,0,-69" max="-204,25,-25"/>
         <cuboid id="yellow-spawn" min="-239,0,148" max="-204,25,192"/>
@@ -93,11 +97,13 @@
     <union id="wool-rooms">
         <rectangle id="orange-for-purple" min="-278,165" max="-265,181"/>
         <rectangle id="lime-for-yellow" min="-278,-58" max="-265,-42"/>
+        <rectangle id="purple-shrine" min="-178,124" max="-162,136"/>
+        <rectangle id="yellow-shrine" min="-178,-13" max="-162,-1"/>
     </union>
     <complement id="not-map">
         <everywhere/>
         <union>
-            <rectangle min="-242,13" max="-206,110"/>
+            <rectangle min="-242,13" max="-204,110"/>
             <rectangle min="-275,-2" max="-242,125"/>
         </union>
     </complement>
@@ -110,7 +116,12 @@
     <apply enter="only-yellow" region="yellow-spawn" message="You may not enter the enemy team's spawn!"/>
     <apply enter="only-purple" region="orange-for-purple" message="You may not modify or enter your own wool room!"/>
     <apply enter="only-yellow" region="lime-for-yellow" message="You may not modify or enter your own wool room!"/>
+    <apply enter="only-purple" region="purple-shrine" message="You may not enter the enemy shrine!"/>
+    <apply enter="only-yellow" region="yellow-shrine" message="You may not enter the enemy shrine!"/>
+    <apply block="only-purple" region="purple-shrine" message="You may not edit the enemy shrine!"/>
+    <apply block="only-yellow" region="yellow-shrine" message="You may not edit the enemy shrine!"/>
     <apply block="never" region="spawner" message="You may not modify the spawner!"/>
+    <apply block="never" region="bridges" message="You may not edit the bridge!"/>
     <apply block-break="only-iron" block-place="only-iron-regen" region="spawns" message="You may only break iron blocks at spawn!"/>
     <apply use="only-purple" block="purple-in-wr" region="orange-for-purple"/>
     <apply use="only-yellow" block="yellow-in-wr" region="lime-for-yellow"/>
@@ -138,7 +149,6 @@
     <item>clay ball</item>
     <item>stone plate</item>
     <item>iron plate</item>
-    <item>sand</item>
     <item>redstone</item>
     <item>redstone torch off</item>
     <item>redstone torch on</item>
